@@ -64,7 +64,7 @@ export const Timeline = () => {
         />
       );
     } else if (milestone.status === 'inprogress') {
-      media = <Spinner animation="grow" variant="light" />;
+      media = <Spinner animation="grow" variant="light" className="custom-grow" />;
     } else if (milestone.status === 'completed') {
       media = <Icon size={0.9} path={mdiCheckCircle} color="green" />;
     }
