@@ -1,20 +1,25 @@
 import './App.css';
 
 import { Navbar } from 'react-bootstrap';
+
 import { Timeline } from './components/timeline';
+import { BitcoinViewer } from './components/bitcoinViewer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <>
+      <header className="App-header sticky-top">
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home">The Great Bet</Navbar.Brand>
         </Navbar>
       </header>
-      <section>
+      <main>
         <Timeline />
-      </section>
-    </div>
+      </main>
+      <footer>
+        <BitcoinViewer />
+      </footer>
+    </>
   );
 }
 
