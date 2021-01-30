@@ -1,0 +1,9 @@
+.icon {
+  color: hsla(0, 0%, 100%, 0.5);
+  fill: hsla(0, 0%, 100%, 0.5);
+}
+
+.icon:hover {
+  color: hsla(0, 0%, 100%, 0.75);
+  fill: hsla(0, 0%, 100%, 0.75);
+}

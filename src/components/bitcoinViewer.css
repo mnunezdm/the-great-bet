@@ -1,18 +1,8 @@
 .price-viewer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  line-height: 1;
 }
 
 .price {
   font-size: 2rem;
   width: 100%;
-  text-align: center;
-}
-
-.price {
-  font-size: 2rem;
-  width: 100%;
-  text-align: center;
 }

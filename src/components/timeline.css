@@ -9,11 +9,10 @@
 
 .event {
   display: flex;
-  margin-bottom: 8px;
 }
 
-.event:last-child {
-  margin-bottom: 0;
+.event:not(:last-child) {
+  margin-bottom: 8px;
 }
 
 h3 {

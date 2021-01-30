@@ -6,3 +6,15 @@ body {
 .container {
   padding-top: 20px;
 }
+
+footer {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+footer > *:not(:last-child) {
+  margin-bottom: 8px;
+}

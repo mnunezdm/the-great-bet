@@ -4,6 +4,7 @@ import { Card, Navbar } from 'react-bootstrap';
 
 import { Timeline } from './components/timeline';
 import { BitcoinViewer } from './components/bitcoinViewer';
+import { AboutMe } from './components/aboutMe';
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
           </Card.Body>
         </Card>
       </main>
-      <footer>
+      <footer className="text-center">
         <BitcoinViewer />
+        <AboutMe />
       </footer>
     </>
   );
