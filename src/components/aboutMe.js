@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { mdiGithub, mdiLinkedin } from '@mdi/js';
 import Icon from '@mdi/react';
 
@@ -5,7 +7,7 @@ import './aboutMe.css';
 
 export const AboutMe = () => {
   return (
-    <div class="about">
+    <div className="about">
       <div>With ❤ from mnunezdm</div>
       <div>
         <a href="https://github.com/mnunezdm" target="#blank">

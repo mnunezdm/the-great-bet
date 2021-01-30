@@ -1,10 +1,10 @@
 import { BitcoinPrice } from './bitcoinPrice';
 
-export default class Price {
-  static PROVIDERS = {
-    bitcoin: BitcoinPrice,
-  };
+const PROVIDERS = {
+  bitcoin: BitcoinPrice,
+};
 
+export default class Price {
   /**
    * @type {Number}
    */
@@ -25,8 +25,8 @@ export default class Price {
    * @returns {Promise<Price>}
    */
   static async getPrice(cryptoName) {
-    if (Price.PROVIDERS[cryptoName]) {
-      return await Price.PROVIDERS[cryptoName].get();
+    if (PROVIDERS[cryptoName]) {
+      return await PROVIDERS[cryptoName].get();
     } else {
       throw new Error('PROVIDER_NOT_CONFIGURED');
     }

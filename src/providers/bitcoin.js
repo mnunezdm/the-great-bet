@@ -1,6 +1,6 @@
-export class BitcoinProvider {
-  static URL = 'https://api.coindesk.com/v1/bpi/currentprice.json';
+const URL = 'https://api.coindesk.com/v1/bpi/currentprice.json';
 
+export class BitcoinProvider {
   static async getCurrentPrice() {
     return (
       BitcoinProvider.getSessionStoragePrice() ||
@@ -9,7 +9,7 @@ export class BitcoinProvider {
   }
 
   static async fetchCurrentPrice() {
-    const response = await fetch(BitcoinProvider.URL);
+    const response = await fetch(URL);
     const body = await response.json();
 
     sessionStorage.setItem('bitcoinPrice', JSON.stringify(body));
