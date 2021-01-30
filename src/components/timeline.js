@@ -13,7 +13,7 @@ export const Timeline = () => {
     },
     {
       header: 'El sistema financiero',
-      status: 'notstarted',
+      status: 'inprogress',
     },
     {
       header: 'Análisis técnico',
@@ -60,7 +60,7 @@ export const Timeline = () => {
         />
       );
     } else if (milestone.status === 'inprogress') {
-      media = <Spinner animation="grow" variant="primary" />;
+      media = <Spinner animation="grow" variant="light" />;
     } else if (milestone.status === 'completed') {
       media = <Icon size={0.9} path={mdiCheckCircle} color="green" />;
     }

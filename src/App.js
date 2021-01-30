@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Navbar } from 'react-bootstrap';
+import { Card, Navbar } from 'react-bootstrap';
 
 import { Timeline } from './components/timeline';
 import { BitcoinViewer } from './components/bitcoinViewer';
@@ -13,8 +13,12 @@ function App() {
           <Navbar.Brand href="#home">The Great Bet</Navbar.Brand>
         </Navbar>
       </header>
-      <main>
-        <Timeline />
+      <main className="container">
+        <Card bg="dark">
+          <Card.Body>
+            <Timeline />
+          </Card.Body>
+        </Card>
       </main>
       <footer>
         <BitcoinViewer />
