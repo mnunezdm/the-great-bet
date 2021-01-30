@@ -13,11 +13,11 @@ export const Timeline = () => {
     },
     {
       header: 'El sistema financiero',
-      status: 'inprogress',
+      status: 'completed',
     },
     {
       header: 'Análisis técnico',
-      status: 'notstarted',
+      status: 'inprogress',
     },
     {
       header: 'Tipos de inversores',
@@ -37,6 +37,10 @@ export const Timeline = () => {
     },
     {
       header: 'Consideraciones finales',
+      status: 'notstarted',
+    },
+    {
+      header: 'Proyecto',
       status: 'notstarted',
     },
     {
@@ -72,7 +76,7 @@ export const Timeline = () => {
       {milestones.map((milestone, index) => (
         <li
           key={index}
-          className={['event', milestone.status === 'completed' && 'completed']
+          className={['event', milestone.status]
             .filter((a) => a)
             .join(' ')}
         >

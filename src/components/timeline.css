@@ -25,27 +25,54 @@ h3 {
   font-size: 0.75rem;
 }
 
-.event.completed .media {
-  fill: green;
+.event .media {
+  position: relative;
 }
 
-.event .media:empty::before {
-  content: '';
-  display: block;
-  border-radius: 100%;
-  border: 0.5px solid white;
-  height: 75%;
-  width: 75%;
+.event svg {
+  z-index: 25;
+  position: absolute;
+}
+
+.event.completed .svg {
+  fill: green;
 }
 
 .event .media {
   min-width: 1.25rem;
-  min-height: 1.25rem;
   max-width: 1.25rem;
-  max-height: 1.25rem;
   margin-right: 8px;
   justify-content: center;
-  align-items: center;
+}
+
+.event .media::before {
+  content: '';
+  position: absolute;
+  display: block;
+  border-radius: 100%;
+  background-color: white;
+  height: 16px;
+  width: 16px;
+  top: 2px;
+}
+
+.event .media:empty::before {
+  background-color: unset;
+  border: 1px solid white;
+}
+
+.event:not(:last-child) .media::after {
+  content: '';
+  width: 2px;
+  height: calc(100% - 8px);
+  background-color: white;
+  position: absolute;
+  top: 18px;
+  z-index: 24;
+}
+
+.event.completed .media::after {
+  background-color: green;
 }
 
 .spinner-grow {
