@@ -1,5 +1,6 @@
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+
+import moment from 'moment';
 
 import { Spinner } from 'react-bootstrap';
 
@@ -36,7 +37,16 @@ export const BitcoinViewer = () => {
   return bitcoinPrice ? (
     <div className="price-viewer">
       <div className="price">1BTC = {bitcoinPrice}€</div>
-      <div className="text-muted">{relativeLastSync}</div>
+      <div className="text-muted font-weight-light">
+        synced {relativeLastSync} with
+        <a
+          href="https://www.coindesk.com/price/bitcoin"
+          target="blank"
+          className="ml-1 text-light"
+        >
+          CoinDesk
+        </a>
+      </div>
     </div>
   ) : (
     <Spinner />
