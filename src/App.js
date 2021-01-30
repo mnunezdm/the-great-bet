@@ -7,6 +7,7 @@ import { Card, Navbar } from 'react-bootstrap';
 import { Timeline } from './components/timeline';
 import { BitcoinViewer } from './components/bitcoinViewer';
 import { AboutMe } from './components/aboutMe';
+import { Countdown } from './components/countdown';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <main className="container">
         <Card bg="dark">
           <Card.Body>
+            <Countdown />
             <Timeline />
           </Card.Body>
         </Card>

@@ -7,6 +7,10 @@ body {
   padding-top: 20px;
 }
 
+.card-body > *:not(:last-child) {
+  margin-bottom: 16px;
+}
+
 footer {
   margin-top: 30px;
   display: flex;

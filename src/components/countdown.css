@@ -1,0 +1,13 @@
+.countdown {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.countdown > *:not(:last-child) {
+  margin-right: 8px;
+}
+.countdown > * > :first-child {
+  font-size: 2.5rem;
+}
