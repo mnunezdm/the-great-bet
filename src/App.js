@@ -8,7 +8,7 @@ import { BitcoinViewer } from './components/bitcoinViewer';
 function App() {
   return (
     <>
-      <header className="App-header sticky-top">
+      <header className="sticky-top">
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home">The Great Bet</Navbar.Brand>
         </Navbar>
