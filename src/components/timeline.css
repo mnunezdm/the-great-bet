@@ -17,8 +17,8 @@
   margin-bottom: 0;
 }
 
-.h3 {
-  font-size: 1rem;
+h3 {
+  font-size: 1rem !important;
   margin-bottom: 0;
 }
 
@@ -27,13 +27,17 @@
   font-size: 0.75rem;
 }
 
-.event.completed .h3 {
-  text-decoration: line-through;
+.event.completed .media {
+  fill: green;
 }
 
-.event .media:empty {
+.event .media:empty::before {
+  content: '';
+  display: block;
   border-radius: 100%;
   border: 0.5px solid black;
+  height: 75%;
+  width: 75%;
 }
 
 .event .media {
@@ -42,6 +46,8 @@
   max-width: 1.25rem;
   max-height: 1.25rem;
   margin-right: 8px;
+  justify-content: center;
+  align-items: center;
 }
 
 .spinner-grow {
