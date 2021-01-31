@@ -14,7 +14,7 @@ export const Countdown = () => {
       // Render a countdown
       const partPrint = (partName) =>
         data[partName] && (
-          <div className={partName}>
+          <div className={partName} key={partName}>
             <span className="value">{data[partName]}</span> {partName}
           </div>
         );
