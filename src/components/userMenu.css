@@ -1,0 +1,19 @@
+.login-button {
+  position: relative;
+  color: white !important;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.login-button svg {
+  fill: white;
+  color: white;
+}
+
+.user-panel_close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 16px;
+}
