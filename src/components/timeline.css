@@ -7,6 +7,23 @@
   padding-inline: 0;
 }
 
+.spinner-container {
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error-container {
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 600;
+}
+
 .event {
   display: flex;
 }

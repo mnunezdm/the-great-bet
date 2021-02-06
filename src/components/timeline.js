@@ -1,57 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon } from '@mdi/react';
-import { mdiBitcoin, mdiCheckCircle } from '@mdi/js';
+import { mdiCheckCircle, mdiAlertOctagon } from '@mdi/js';
 import { Spinner } from 'react-bootstrap';
+
+import { Milestone } from '../models/milestone';
 
 import './timeline.css';
 
 export const Timeline = () => {
-  const milestones = [
-    {
-      header: 'Pagar',
-      status: 'completed',
-    },
-    {
-      header: 'El sistema financiero',
-      status: 'completed',
-    },
-    {
-      header: 'Análisis técnico',
-      status: 'inprogress',
-    },
-    {
-      header: 'Tipos de inversores',
-      status: 'notstarted',
-    },
-    {
-      header: 'Análisis fundamental y macroeconómico',
-      status: 'notstarted',
-    },
-    {
-      header: 'Gestión monetaria',
-      status: 'notstarted',
-    },
-    {
-      header: 'Gestión del riesgo',
-      status: 'notstarted',
-    },
-    {
-      header: 'Consideraciones finales',
-      status: 'notstarted',
-    },
-    {
-      header: 'Proyecto',
-      status: 'notstarted',
-    },
-    {
-      header: 'Bitcoin',
-      status: 'notstarted',
-      icon: {
-        path: mdiBitcoin,
-        color: '#f90',
-      },
-    },
-  ];
+  const [milestones, setMilestones] = useState([]);
+  const [syncError, setSyncError] = useState();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const response = await Milestone.getMilestones();
+        setMilestones(response);
+      } catch (e) {
+        setSyncError(e.message);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   const getMedia = (milestone) => {
     let media;
@@ -64,7 +37,9 @@ export const Timeline = () => {
         />
       );
     } else if (milestone.status === 'inprogress') {
-      media = <Spinner animation="grow" variant="light" className="custom-grow" />;
+      media = (
+        <Spinner animation="grow" variant="light" className="custom-grow" />
+      );
     } else if (milestone.status === 'completed') {
       media = <Icon size={0.9} path={mdiCheckCircle} color="green" />;
     }
@@ -72,21 +47,34 @@ export const Timeline = () => {
   };
 
   return (
-    <ul className="timeline">
-      {milestones.map((milestone, index) => (
-        <li
-          key={index}
-          className={['event', milestone.status]
-            .filter((a) => a)
-            .join(' ')}
-        >
-          <div className="media">{getMedia(milestone)}</div>
-          <div className="text">
-            <h3 className="h3">{milestone.header}</h3>
-            <p>{milestone.description}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <>
+      {loading && (
+        <div className="spinner-container text-light">
+          <Spinner size="big" variant="light" animation="border" />
+          <div className="mt-3">Loading milestones</div>
+        </div>
+      )}
+      {syncError && (
+        <div className="error-container text-danger">
+          <Icon path={mdiAlertOctagon} size={3} />
+          <div className="mt-3">{syncError}</div>
+        </div>
+      )}
+
+      <ul className="timeline">
+        {milestones.map((milestone, index) => (
+          <li
+            key={index}
+            className={['event', milestone.status].filter((a) => a).join(' ')}
+          >
+            <div className="media">{getMedia(milestone)}</div>
+            <div className="text">
+              <h3 className="h3">{milestone.title}</h3>
+              <p>{milestone.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };

@@ -1,0 +1,38 @@
+import { MilestoneProvider } from '../providers/milestone';
+
+import { mdiBitcoin } from '@mdi/js';
+
+export class Milestone {
+  /**
+   * @returns {Promise<Array<Milestone>>}
+   */
+  static async getMilestones() {
+    const response = await MilestoneProvider.getMilestones();
+    const milestones = response.map(Milestone.fromJson);
+
+    milestones.push(Milestone.finalMilestone);
+
+    return milestones;
+  }
+
+  static fromJson(response) {
+    const milestone = new Milestone();
+
+    Object.assign(milestone, response);
+
+    return milestone;
+  }
+
+  static get finalMilestone() {
+    const milestone = new Milestone();
+
+    milestone.title = 'Bitcoin';
+    milestone.status = 'notstarted';
+    milestone.icon = {
+      path: mdiBitcoin,
+      color: '#f90',
+    };
+
+    return milestone;
+  }
+}
