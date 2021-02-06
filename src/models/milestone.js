@@ -3,6 +3,16 @@ import { MilestoneProvider } from '../providers/milestone';
 import { mdiBitcoin } from '@mdi/js';
 
 export class Milestone {
+  /**
+   * @type {Date}
+   */
+  get completedDate() {
+    return this._completedDate;
+  }
+  set completedDate(completedDate) {
+    this._completedDate = completedDate && new Date(completedDate);
+  }
+
   async markAsCompleted() {
     return new Promise((resolve, reject) => {
       setTimeout(reject, 2500);

@@ -111,6 +111,14 @@ const TimelineItem = ({ milestone, editable }) => {
 
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
 
+  /**
+   *
+   * @param {Date} date
+   */
+  const formatDate = (date) => {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  };
+
   return (
     <li className={['event', milestone.status].filter((a) => a).join(' ')}>
       <div className="media">{getMedia(milestone)}</div>
@@ -134,6 +142,11 @@ const TimelineItem = ({ milestone, editable }) => {
         )}
         {error && (
           <div className="mt-3 text-danger align-self-center">{error}</div>
+        )}
+      </div>
+      <div className="font-weight-light font-italic">
+        {milestone.completedDate && (
+          <span>{formatDate(milestone.completedDate)}</span>
         )}
       </div>
     </li>
