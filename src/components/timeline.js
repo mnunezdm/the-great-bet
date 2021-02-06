@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useReducer } from 'react';
+import PropTypes from 'prop-types';
+
 import { Icon } from '@mdi/react';
 import { mdiCheckCircle, mdiAlertOctagon } from '@mdi/js';
+
 import { Spinner, Button } from 'react-bootstrap';
 
 import { Milestone } from '../models/milestone';
@@ -17,8 +20,6 @@ export const Timeline = () => {
 
   const [isLogged, setLoggedIn] = useState(user.isLogged);
 
-  const forceUpdate = useReducer((x) => x + 1, 0)[1];
-
   useEffect(() => {
     refreshMilestones();
   }, []);
@@ -31,26 +32,6 @@ export const Timeline = () => {
     };
   });
 
-  const getMedia = (milestone) => {
-    let media;
-    if (milestone.icon) {
-      media = (
-        <Icon
-          size={0.9}
-          path={milestone.icon.path}
-          color={milestone.icon.color}
-        />
-      );
-    } else if (milestone.status === 'inprogress') {
-      media = (
-        <Spinner animation="grow" variant="light" className="custom-grow" />
-      );
-    } else if (milestone.status === 'completed') {
-      media = <Icon size={0.9} path={mdiCheckCircle} color="green" />;
-    }
-    return media;
-  };
-
   const refreshMilestones = async () => {
     try {
       setLoading(true);
@@ -61,11 +42,6 @@ export const Timeline = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const setCompleted = (milestone) => {
-    milestone.status = 'completed';
-    forceUpdate();
   };
 
   return (
@@ -84,29 +60,87 @@ export const Timeline = () => {
       )}
 
       <ul className="timeline">
-        {milestones.map((milestone, index) => (
-          <li
-            key={index}
-            className={['event', milestone.status].filter((a) => a).join(' ')}
-          >
-            <div className="media">{getMedia(milestone)}</div>
-            <div className="d-flex flex-column flex-grow-1">
-              <h3 className="h3">{milestone.title}</h3>
-              <p className="event-description">{milestone.description}</p>
-              {milestone.status === 'inprogress' && isLogged && (
-                <div className="d-flex justify-content-center align-items-center">
-                  <Button
-                    variant="primary"
-                    onClick={() => setCompleted(milestone)}
-                  >
-                    Mark as completed
-                  </Button>
-                </div>
-              )}
-            </div>
-          </li>
+        {milestones.map((milestone) => (
+          <TimelineItem
+            milestone={milestone}
+            key={milestone.id}
+            editable={isLogged}
+          />
         ))}
       </ul>
     </>
   );
+};
+
+const getMedia = (milestone) => {
+  let media;
+  if (milestone.icon) {
+    media = (
+      <Icon
+        size={0.9}
+        path={milestone.icon.path}
+        color={milestone.icon.color}
+      />
+    );
+  } else if (milestone.status === 'inprogress') {
+    media = (
+      <Spinner animation="grow" variant="light" className="custom-grow" />
+    );
+  } else if (milestone.status === 'completed') {
+    media = <Icon size={0.9} path={mdiCheckCircle} color="green" />;
+  }
+  return media;
+};
+
+const TimelineItem = ({ milestone, editable }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const setCompleted = async (milestone) => {
+    setLoading(true);
+    setError();
+    try {
+      await milestone.markAsCompleted();
+    } catch (e) {
+      setError('No te lo crees ni tu, cabron');
+    } finally {
+      setLoading(false);
+    }
+    forceUpdate();
+  };
+
+  const forceUpdate = useReducer((x) => x + 1, 0)[1];
+
+  return (
+    <li className={['event', milestone.status].filter((a) => a).join(' ')}>
+      <div className="media">{getMedia(milestone)}</div>
+      <div className="d-flex flex-column flex-grow-1">
+        <h3 className="h3">{milestone.title}</h3>
+        <p className="event-description">{milestone.description}</p>
+        {milestone.status === 'inprogress' && editable && (
+          <div className="d-flex justify-content-center align-items-center">
+            <Button variant="primary" onClick={() => setCompleted(milestone)}>
+              {loading && (
+                <Spinner
+                  size="sm"
+                  variant="light"
+                  animation="border"
+                  className="mr-2"
+                />
+              )}
+              Mark as completed
+            </Button>
+          </div>
+        )}
+        {error && (
+          <div className="mt-3 text-danger align-self-center">{error}</div>
+        )}
+      </div>
+    </li>
+  );
+};
+
+TimelineItem.propTypes = {
+  milestone: PropTypes.object,
+  editable: PropTypes.bool,
 };

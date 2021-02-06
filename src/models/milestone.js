@@ -3,6 +3,12 @@ import { MilestoneProvider } from '../providers/milestone';
 import { mdiBitcoin } from '@mdi/js';
 
 export class Milestone {
+  async markAsCompleted() {
+    return new Promise((resolve, reject) => {
+      setTimeout(reject, 2500);
+    });
+  }
+
   /**
    * @returns {Promise<Array<Milestone>>}
    */
@@ -26,6 +32,7 @@ export class Milestone {
   static get finalMilestone() {
     const milestone = new Milestone();
 
+    milestone.id = 'Bitcoin';
     milestone.title = 'Bitcoin';
     milestone.status = 'notstarted';
     milestone.icon = {
