@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCheckCircle, mdiAlertOctagon } from '@mdi/js';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Button } from 'react-bootstrap';
 
 import { Milestone } from '../models/milestone';
+import { useUser } from './userContext';
 
 import './timeline.css';
 
@@ -12,19 +13,23 @@ export const Timeline = () => {
   const [syncError, setSyncError] = useState();
   const [loading, setLoading] = useState(false);
 
+  const user = useUser();
+
+  const [isLogged, setLoggedIn] = useState(user.isLogged);
+
+  const forceUpdate = useReducer((x) => x + 1, 0)[1];
+
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const response = await Milestone.getMilestones();
-        setMilestones(response);
-      } catch (e) {
-        setSyncError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    refreshMilestones();
   }, []);
+
+  useEffect(() => {
+    user.on('loginState', setLoggedIn);
+
+    return () => {
+      user.removeListener('loginState', setLoggedIn);
+    };
+  });
 
   const getMedia = (milestone) => {
     let media;
@@ -44,6 +49,23 @@ export const Timeline = () => {
       media = <Icon size={0.9} path={mdiCheckCircle} color="green" />;
     }
     return media;
+  };
+
+  const refreshMilestones = async () => {
+    try {
+      setLoading(true);
+      const response = await Milestone.getMilestones();
+      setMilestones(response);
+    } catch (e) {
+      setSyncError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setCompleted = (milestone) => {
+    milestone.status = 'completed';
+    forceUpdate();
   };
 
   return (
@@ -68,9 +90,19 @@ export const Timeline = () => {
             className={['event', milestone.status].filter((a) => a).join(' ')}
           >
             <div className="media">{getMedia(milestone)}</div>
-            <div className="text">
+            <div className="d-flex flex-column flex-grow-1">
               <h3 className="h3">{milestone.title}</h3>
-              <p>{milestone.description}</p>
+              <p className="event-description">{milestone.description}</p>
+              {milestone.status === 'inprogress' && isLogged && (
+                <div className="d-flex justify-content-center align-items-center">
+                  <Button
+                    variant="primary"
+                    onClick={() => setCompleted(milestone)}
+                  >
+                    Mark as completed
+                  </Button>
+                </div>
+              )}
             </div>
           </li>
         ))}

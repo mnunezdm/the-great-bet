@@ -28,6 +28,10 @@
   display: flex;
 }
 
+.event-description:empty {
+  display: none;
+}
+
 .event:not(:last-child) {
   margin-bottom: 8px;
 }

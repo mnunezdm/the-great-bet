@@ -22,16 +22,12 @@ export function NavbarUser() {
   const [error, setError] = useState(undefined);
 
   useEffect(() => {
-    user.on('loginState', onUserLoginStateChange);
+    user.on('loginState', setLoggedIn);
 
     return () => {
-      user.removeListener('loginState', onUserLoginStateChange);
+      user.removeListener('loginState', setLoggedIn);
     };
   });
-
-  function onUserLoginStateChange(state) {
-    setLoggedIn(state);
-  }
 
   /**
    *
