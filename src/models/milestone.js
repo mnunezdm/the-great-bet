@@ -28,7 +28,7 @@ export class Milestone {
 
     milestones.push(Milestone.finalMilestone);
 
-    return milestones;
+    return milestones.sort((a, b) => a.id - b.id);
   }
 
   static fromJson(response) {
