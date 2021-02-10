@@ -144,7 +144,10 @@ const TimelineItem = ({ milestone, editable }) => {
           <div className="mt-3 text-danger align-self-center">{error}</div>
         )}
       </div>
-      <div className="font-weight-light font-italic">
+      <div className="font-weight-light font-italic dates">
+        {milestone.startedDate && (
+          <span>{formatDate(milestone.startedDate)}</span>
+        )}
         {milestone.completedDate && (
           <span>{formatDate(milestone.completedDate)}</span>
         )}

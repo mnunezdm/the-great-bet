@@ -103,3 +103,7 @@ h3 {
   position: absolute;
   top: 2px;
 }
+
+.event .dates > *:nth-child(2)::before {
+  content: ' - ';
+}

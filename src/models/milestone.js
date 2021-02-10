@@ -13,10 +13,16 @@ export class Milestone {
     this._completedDate = completedDate && new Date(completedDate);
   }
 
-  async markAsCompleted() {
-    return new Promise((resolve, reject) => {
-      setTimeout(reject, 2500);
-    });
+  /**
+   * @type {Date}
+   */
+  get startedDate() {
+    return this._startedDate;
+  }
+  set startedDate(startedDate) {
+    this._startedDate = startedDate && new Date(startedDate);
+  }
+
   }
 
   /**

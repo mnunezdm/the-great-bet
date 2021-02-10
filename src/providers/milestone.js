@@ -2,7 +2,7 @@ import { BaseProvider } from './base';
 
 export class MilestoneProvider extends BaseProvider {
   /**
-   *
+   * @returns {Promise<Array>}
    */
   static async getMilestones() {
     const response = await fetch(
@@ -15,7 +15,7 @@ export class MilestoneProvider extends BaseProvider {
         credentials: 'include',
         body: JSON.stringify({
           query:
-            '{ milestones { id, title, description, status, completedDate }}',
+            '{ milestones { id, title, description, status, completedDate, startedDate, }}',
           variables: null,
         }),
       }
