@@ -60,11 +60,13 @@ export const Timeline = () => {
       )}
 
       <ul className="timeline">
-        {milestones.map((milestone) => (
+        {milestones.map((milestone, index, _milestones) => (
           <TimelineItem
+            onStatusUpdate={refreshMilestones}
             milestone={milestone}
             key={milestone.id}
             editable={isLogged}
+            previousMilestoneStatus={_milestones[index - 1]?.status}
           />
         ))}
       </ul>
@@ -92,7 +94,12 @@ const getMedia = (milestone) => {
   return media;
 };
 
-const TimelineItem = ({ milestone, editable }) => {
+const TimelineItem = ({
+  milestone,
+  editable,
+  previousMilestoneStatus,
+  onStatusUpdate,
+}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
 
@@ -100,9 +107,10 @@ const TimelineItem = ({ milestone, editable }) => {
     setLoading(true);
     setError();
     try {
-      await milestone.markAsCompleted();
+      await milestone.updateStatus();
+      onStatusUpdate && onStatusUpdate();
     } catch (e) {
-      setError('No te lo crees ni tu, cabron');
+      setError(e);
     } finally {
       setLoading(false);
     }
@@ -119,15 +127,23 @@ const TimelineItem = ({ milestone, editable }) => {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   };
 
+  const readyToStart =
+    milestone.status === 'notstarted' &&
+    previousMilestoneStatus === 'completed';
+  const readyToFinish = milestone.status === 'inprogress';
+
   return (
     <li className={['event', milestone.status].filter((a) => a).join(' ')}>
       <div className="media">{getMedia(milestone)}</div>
       <div className="d-flex flex-column flex-grow-1">
         <h3 className="h3">{milestone.title}</h3>
         <p className="event-description">{milestone.description}</p>
-        {milestone.status === 'inprogress' && editable && (
+        {(readyToStart || readyToFinish) && editable && (
           <div className="d-flex justify-content-center align-items-center">
-            <Button variant="primary" onClick={() => setCompleted(milestone)}>
+            <Button
+              variant={(readyToStart && 'primary') || 'secondary'}
+              onClick={() => setCompleted(milestone)}
+            >
               {loading && (
                 <Spinner
                   size="sm"
@@ -136,7 +152,7 @@ const TimelineItem = ({ milestone, editable }) => {
                   className="mr-2"
                 />
               )}
-              Mark as completed
+              {(readyToStart && 'Start milestone!') || 'Mark as completed!'}
             </Button>
           </div>
         )}
@@ -159,4 +175,6 @@ const TimelineItem = ({ milestone, editable }) => {
 TimelineItem.propTypes = {
   milestone: PropTypes.object,
   editable: PropTypes.bool,
+  previousMilestoneStatus: PropTypes.string,
+  onStatusUpdate: PropTypes.func,
 };

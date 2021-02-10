@@ -23,6 +23,24 @@ export class Milestone {
     this._startedDate = startedDate && new Date(startedDate);
   }
 
+  /**
+   * @type {String}
+   */
+  get nextStatus() {
+    let nextStatus;
+    switch (this.status) {
+      case 'notstarted':
+        nextStatus = 'inprogress';
+        break;
+      case 'inprogress':
+        nextStatus = 'completed';
+        break;
+      case 'completed':
+        throw new Error('No status after completed');
+      default:
+        throw new Error('Invalid current status');
+    }
+    return nextStatus;
   }
 
   /**
@@ -35,6 +53,13 @@ export class Milestone {
     milestones.push(Milestone.finalMilestone);
 
     return milestones.sort((a, b) => a.id - b.id);
+  }
+
+  /**
+   * @returns {Promise<Array<Milestone>>}
+   */
+  async updateStatus() {
+    await MilestoneProvider.updateStatus(this.id, this.nextStatus);
   }
 
   static fromJson(response) {

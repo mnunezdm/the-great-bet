@@ -29,6 +29,45 @@ export class MilestoneProvider extends BaseProvider {
 
     return body.data.milestones;
   }
+
+  /**
+   *
+   * @param {Integer} id
+   * @param {String} status
+   */
+  static async updateStatus(id, status) {
+    const response = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/graphql`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          query: `
+            mutation milestoneStatus($id: Int!, $status: Status!) {
+              milestoneStatus(id: $id, status: $status) {
+                  id,
+                  title,
+                  completedDate,
+                  startedDate
+                }
+            }`,
+          variables: {
+            id,
+            status,
+          },
+        }),
+      }
+    );
+
+    const body = await this.getBody(response);
+
+    if (response.status !== 200) {
+      throw new FetchMilestones(this.getErrorMessage(body));
+    }
+  }
 }
 
 class FetchMilestones extends Error {
