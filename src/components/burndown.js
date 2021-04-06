@@ -28,6 +28,22 @@ export const Burndown = () => {
   const initializeChart = (milestones) => {
     milestones.pop();
 
+    const separate = (title, max) => {
+      const last = (list) => list[list.length - 1];
+      const merge = (first, last) => `${first} ${last}`;
+
+      const splitted = title.split(' ');
+      const result = [splitted.shift()];
+
+      splitted.forEach((word) => {
+        merge(last(result), word).length > max
+          ? result.push(word)
+          : (result[result.length - 1] = merge(last(result), word));
+      });
+
+      return result;
+    };
+
     setOptions({
       scales: {
         scaleLabel: {
@@ -40,7 +56,7 @@ export const Burndown = () => {
             },
             ticks: {
               fontColor: '#FFF',
-              callback: (_, index) => milestones[index].title,
+              callback: (_, index) => separate(milestones[index].title, 20),
             },
           },
         ],
