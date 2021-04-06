@@ -23,6 +23,14 @@ export class Milestone {
     this._startedDate = startedDate && new Date(startedDate);
   }
 
+  get isCompleted() {
+    return this.status === 'completed';
+  }
+
+  get isInProgress() {
+    return this.status === 'inprogress';
+  }
+
   /**
    * @type {String}
    */
