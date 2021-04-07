@@ -16,7 +16,7 @@ import { NavbarUser } from './components/userMenu';
 import { Burndown } from './components/burndown';
 
 function App() {
-  const [showTimeline, setShowTimeline] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(true);
 
   const toggleTimeline = () => {
     setShowTimeline(!showTimeline);
