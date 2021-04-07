@@ -65,7 +65,7 @@ export const Timeline = () => {
             onStatusUpdate={refreshMilestones}
             milestone={milestone}
             key={milestone.id}
-            editable={isLogged}
+            editable={isLogged && index !== _milestones.length - 1}
             previousMilestoneStatus={_milestones[index - 1]?.status}
           />
         ))}
