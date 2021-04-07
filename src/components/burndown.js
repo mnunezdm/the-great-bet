@@ -90,7 +90,7 @@ export const Burndown = () => {
     const actuals = milestones
       .filter((milestone) => milestone.isCompleted)
       .map((milestone) => ({
-        x: milestone.completedDate.toISOString(),
+        x: milestone.completedDate,
         y: milestones.length - milestone.id,
       }));
 
@@ -113,8 +113,8 @@ export const Burndown = () => {
           borderDash: [5, 5],
           fill: false,
           data: [
-            { x: new Date('01/28/2021').toISOString(), y: 8 },
-            { x: new Date('09/15/2021').toISOString(), y: 0 },
+            { x: new Date('01/28/2021'), y: 8 },
+            { x: new Date('09/15/2021'), y: 0 },
           ],
           order: 2,
         },
