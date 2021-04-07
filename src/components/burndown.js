@@ -16,13 +16,9 @@ export const Burndown = () => {
   const [options, setOptions] = useState(null);
 
   const refreshMilestones = async () => {
-    try {
-      setData(null);
-      setLoading(true);
-      return await Milestone.getMilestones();
-    } catch (e) {
-      setSyncError(e.message);
-    }
+    setData(null);
+    setLoading(true);
+    return await Milestone.getMilestones();
   };
 
   const initializeChart = (milestones) => {
@@ -147,6 +143,7 @@ export const Burndown = () => {
   useEffect(() => {
     refreshMilestones()
       .then((milestones) => initializeChart(milestones))
+      .catch((error) => setSyncError(error.message))
       .finally(() => setLoading(false));
   }, []);
 
