@@ -10,10 +10,18 @@ export const AboutMe = () => {
     <div className="about">
       <div>With ❤ from mnunezdm</div>
       <div>
-        <a href="https://github.com/mnunezdm" target="#blank">
+        <a
+          href="https://github.com/mnunezdm"
+          target="#blank"
+          aria-label="Github"
+        >
           <Icon className="icon" path={mdiGithub} size={1} />
         </a>
-        <a href="https://www.linkedin.com/in/mnunezdm/" target="#blank">
+        <a
+          href="https://www.linkedin.com/in/mnunezdm/"
+          target="#blank"
+          aria-label="Linkedin"
+        >
           <Icon className="icon" path={mdiLinkedin} size={1} />
         </a>
       </div>
